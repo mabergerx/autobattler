@@ -14,7 +14,6 @@ if os.path.isfile(file_path):
     with open("tier1_cards.json", "r") as outfile:
         cards = json.load(outfile)
         filtered_cards = [reduce_card_info(card) for card in cards]
-        print(filtered_cards)
 else:
     print("The file does not exist.")
     # To retrieve fresh BG cards
@@ -64,3 +63,20 @@ else:
         # with open("tier1_cards.json", "r") as outfile:
         #     loaded = json.load(outfile)
         #     print(loaded[0])
+
+
+class Card:
+    def __init__(self, health, attack, mana_cost, name, text):
+        self.health = health
+        self.attack = attack
+        self.mana_cost = mana_cost
+        self.name = name
+        self.text = text
+
+    def adjust_health(self, health_delta):
+        # Health delta should always be a number which we add to health, either negative or positive
+        self.health = self.health + health_delta
+
+    def adjust_attack(self, attack_delta):
+        # Attack delta should always be a number which we add to attack, either negative or positive
+        self.attack = self.attack + attack_delta
