@@ -3,6 +3,11 @@ class Board:
         self.player = player
         self.cards = cards
         self.num_cards = len(self.cards)
+        self.assign_board_membership()
+
+    def assign_board_membership(self):
+        for card in self.cards:
+            card.assign_board_membership(self.player)
 
     def add_card_to_board(self, card):
         self.cards.append(card)

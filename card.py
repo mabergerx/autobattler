@@ -8,6 +8,7 @@ class Card:
         self.taunt = self.has_taunt()
         self.divine_shield = self.has_ds()
         self.windfury = self.has_windfury()
+        self.board_membership = None
 
     def adjust_health(self, health_delta):
         # Health delta should always be a number which we add to health, either negative or positive
@@ -29,10 +30,13 @@ class Card:
     def has_windfury(self):
         return "Windfury" in self.text
 
+    def assign_board_membership(self, board_id):
+        self.board_membership = board_id
+
     def __str__(self):
         return (
             f"Card: {self.name}\nAttack: {self.attack}\nHealth: {self.health}\nDivine Shield: {self.divine_shield}"
-            f"\nTaunt: {self.taunt}"
+            f"\nTaunt: {self.taunt}\nBoard: {self.board_membership}"
         )
 
 

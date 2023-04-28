@@ -30,3 +30,4 @@ def attack(attacker, defender):
     )
     attacker.adjust_health(-attacker_delta)
     defender.adjust_health(-defender_delta)
+
