@@ -2,6 +2,7 @@ from board import Board
 from api_interactions import get_card_by_name
 from card import parse_card_json_item
 from card_interactions import attack
+from combatround import CombatRound
 
 # Let's try en example with attacking
 
@@ -30,9 +31,13 @@ defender_card = parse_card_json_item(defender_card_data)
 board1 = Board(player=1, cards=[attacker_card])
 board2 = Board(player=2, cards=[defender_card])
 print(board1)
-# print(board2)
+print(board2)
 
-for c in board1.cards:
-    print(c)
-    print("----")
+# for c in board1.cards:
+#     print(c)
+#     print("----")
 
+combat_round1 = CombatRound(board1, board2)
+print("determining first attacker...")
+print(combat_round1.first_attacker)
+print(combat_round1.current_attacker_board)
