@@ -7,6 +7,7 @@ class Card:
         self.text = text
         self.taunt = self.has_taunt()
         self.divine_shield = self.has_ds()
+        self.windfury = self.has_windfury()
 
     def adjust_health(self, health_delta):
         # Health delta should always be a number which we add to health, either negative or positive
@@ -23,3 +24,7 @@ class Card:
 
     def has_ds(self):
         return "Divine Shield" in self.text
+
+    # Tier 1 minions have no windfury so this is for later
+    def has_windfury(self):
+        return "Windfury" in self.text
