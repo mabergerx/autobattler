@@ -30,5 +30,17 @@ class Card:
         return "Windfury" in self.text
 
     def __str__(self):
-        return f"Card: {self.name}\nAttack: {self.attack}\nHealth: {self.health}\nDivine Shield: {self.divine_shield}" \
-               f"\nTaunt: {self.taunt}"
+        return (
+            f"Card: {self.name}\nAttack: {self.attack}\nHealth: {self.health}\nDivine Shield: {self.divine_shield}"
+            f"\nTaunt: {self.taunt}"
+        )
+
+
+def parse_card_json_item(json_item):
+    return Card(
+        health=json_item["health"],
+        attack=json_item["attack"],
+        mana_cost=json_item["manaCost"],
+        name=json_item["name"],
+        text=json_item["text"],
+    )

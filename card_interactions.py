@@ -1,5 +1,5 @@
 from api_interactions import get_card_by_name
-from card import Card
+from card import Card, parse_card_json_item
 
 
 def attack(attacker, defender):
@@ -41,21 +41,9 @@ def attack(attacker, defender):
 attacker_card_data = get_card_by_name("Pupbot")
 defender_card_data = get_card_by_name("Sellemental")
 
-attacker_card = Card(
-    health=attacker_card_data["health"],
-    attack=attacker_card_data["attack"],
-    mana_cost=attacker_card_data["manaCost"],
-    name=attacker_card_data["name"],
-    text=attacker_card_data["text"],
-)
+attacker_card = parse_card_json_item(attacker_card_data)
 
-defender_card = Card(
-    health=defender_card_data["health"],
-    attack=defender_card_data["attack"],
-    mana_cost=defender_card_data["manaCost"],
-    name=defender_card_data["name"],
-    text=defender_card_data["text"],
-)
+defender_card = parse_card_json_item(defender_card_data)
 
 print(attacker_card)
 print("---")
@@ -69,3 +57,4 @@ print(attacker_card)
 print("---")
 print(defender_card)
 print("---")
+
