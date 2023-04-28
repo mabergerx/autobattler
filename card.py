@@ -28,3 +28,7 @@ class Card:
     # Tier 1 minions have no windfury so this is for later
     def has_windfury(self):
         return "Windfury" in self.text
+
+    def __str__(self):
+        return f"Card: {self.name}\nAttack: {self.attack}\nHealth: {self.health}\nDivine Shield: {self.divine_shield}" \
+               f"\nTaunt: {self.taunt}"
