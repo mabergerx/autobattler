@@ -10,3 +10,9 @@ class Board:
     def remove_card_from_board(self, card):
         # TODO: how? do we wanna keep internal card ids per board?
         pass
+
+    def __str__(self):
+        cards = "\n ".join([f"{card.name} ({card.attack}/{card.health}) [DS:{card.divine_shield} Taunt:{card.taunt}]" for card in self.cards])
+        return (
+            f"Player: {self.player}\nCards: {cards}"
+        )
