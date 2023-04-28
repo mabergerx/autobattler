@@ -15,6 +15,11 @@ class CombatRound:
     def set_current_defender(self, board_id):
         self.current_defender_board = board_id
 
+    def get_board_by_id(self, board_id):
+        for board in [self.board1, self.board2]:
+            if board.player == board_id:
+                return board
+
     def determine_first_attacker(self):
         # For now, we disregard any forced first attacks, and determine this only based on minion count and RNG
         board1_cards = self.board1.cards
@@ -41,17 +46,16 @@ class CombatRound:
     def determine_attack_target(self):
         # For now, this is by default a random target, unless there is a Taunt card. If there are multiple Taunt cards,
         # randomly choose from those.
-        if attacker.board_membership == 1:
-            defender_board = self.board2.cards
-        else:
-            defender_board = self.board1.cards
+        defender_board = self.get_board_by_id(self.current_defender_board)
 
         # Check for Taunts
-        taunt_cards_defender = [card for card in defender_board if card.taunt]
+        taunt_cards_defender = [card for card in defender_board.cards if card.taunt]
 
         if taunt_cards_defender:
             defender_card = random.choice(taunt_cards_defender)
         else:
-            defender_card = random.choice(defender_board)
+            defender_card = random.choice(defender_board.cards)
 
         return defender_card
+
+

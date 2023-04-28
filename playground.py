@@ -8,10 +8,12 @@ from combatround import CombatRound
 
 attacker_card_data = get_card_by_name("Pupbot")
 defender_card_data = get_card_by_name("Sellemental")
+second_defender_card_data = get_card_by_name("Dozy Whelp")
 
 attacker_card = parse_card_json_item(attacker_card_data)
 
 defender_card = parse_card_json_item(defender_card_data)
+second_defender_card = parse_card_json_item(second_defender_card_data)
 
 # print(attacker_card)
 # print("---")
@@ -28,8 +30,8 @@ defender_card = parse_card_json_item(defender_card_data)
 
 
 # Boards test
-board1 = Board(player=1, cards=[attacker_card])
-board2 = Board(player=2, cards=[defender_card])
+board1 = Board(player=1, cards=[attacker_card, attacker_card])
+board2 = Board(player=2, cards=[defender_card, second_defender_card])
 print(board1)
 print(board2)
 
@@ -39,5 +41,6 @@ print(board2)
 
 combat_round1 = CombatRound(board1, board2)
 print("determining first attacker...")
-print(combat_round1.first_attacker)
-print(combat_round1.current_attacker_board)
+# print(combat_round1.first_attacker)
+print("Current attacker board:", combat_round1.current_attacker_board)
+print("Current defender card:", combat_round1.determine_attack_target().name)
