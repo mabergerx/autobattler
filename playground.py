@@ -27,8 +27,8 @@ defender_card = parse_card_json_item(defender_card_data)
 
 
 # Boards test
-board1 = Board(player=1, cards=[attacker_card])
-board2 = Board(player=2, cards=[defender_card, defender_card])
+board1 = Board(player=1, cards=[attacker_card, defender_card])
+board2 = Board(player=2, cards=[defender_card])
 print(board1)
 print(board2)
 
