@@ -69,7 +69,7 @@ else:
         #     print(loaded[0])
 
 
-# Metadata
+# Metadata TODO
 
 if os.path.isfile(file_path_metadata):
     with open("metadata.json", "r") as outfile:
