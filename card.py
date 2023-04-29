@@ -41,6 +41,12 @@ class Card:
 
 
 def parse_card_json_item(json_item):
+    """
+    Convert one card attribute JSON list into a Card object.
+
+    :param json_item:
+    :return:
+    """
     return Card(
         health=json_item["health"],
         attack=json_item["attack"],
