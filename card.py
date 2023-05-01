@@ -46,6 +46,10 @@ class Card:
     def has_deathrattle(self):
         return "Deathrattle" in self.text
 
+    def update_divine_shield(self):
+        # By flipping this, we can both assign and remove DS from a minion
+        self.divine_shield = not self.divine_shield
+
     def assign_board_membership(self, board_id):
         self.board_membership = board_id
 

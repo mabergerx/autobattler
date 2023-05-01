@@ -1,8 +1,11 @@
 import random
-
+from card_interactions import attack
 
 class CombatEvent:
     def __init__(self, attacker, defender):
+        self.attacker = attacker
+        self.defender = defender
+
         self.attacker_attack = attacker.attack
         self.attacker_health = attacker.health
         self.defender_attack = defender.attack
@@ -12,6 +15,40 @@ class CombatEvent:
         self.defender_ds = attacker.divine_shield
 
         self.attacker_poisonous = attacker.poisonous
+        self.defender_poisonous = defender.poisonous
+
+        self.attacker_windfury = attacker.windfury
+
+    def attack(self, attacker, defender):
+
+        def determine_health_delta_after_attack():
+
+            # TODO: Remember to update divine shield status after this resolves!
+
+            if self.defender_ds:
+                defender_health_delta = 0
+            else:
+                if self.attacker_poisonous:
+                    defender_health_delta = self.defender_health # Or maybe better -9999?
+                else:
+                    defender_health_delta = self.attacker_attack
+
+            if self.attacker_ds:
+                attacker_health_delta = 0
+            else:
+                if self.defender_poisonous:
+                    attacker_health_delta = self.attacker_health
+                else:
+                    attacker_health_delta = self.defender_attack
+
+            return defender_health_delta, attacker_health_delta
+
+        # For now we disregard Windfury and Poisonous as it doesn't appear in our card set
+        defender_delta, attacker_delta = determine_health_delta_after_attack(
+            attacker_ds, defender_ds
+        )
+        attacker.adjust_health(-attacker_delta)
+        defender.adjust_health(-defender_delta)
 
 
 """
@@ -36,7 +73,7 @@ class CombatRound:
         self.current_attacker_board = None
         self.current_defender_board = None
         self.first_attacker = self.determine_first_attacker()
-        self.combat_flow = []
+        self.combatevent_flow = []
 
     def set_current_attacker_board(self, board_id):
         self.current_attacker_board = board_id
