@@ -3,7 +3,15 @@ import random
 
 class CombatEvent:
     def __init__(self, attacker, defender):
+        self.attacker_attack = attacker.attack
+        self.attacker_health = attacker.health
+        self.defender_attack = defender.attack
+        self.defender_health = defender.health
 
+        self.attacker_ds = attacker.divine_shield
+        self.defender_ds = attacker.divine_shield
+
+        self.attacker_poisonous = attacker.poisonous
 
 
 """

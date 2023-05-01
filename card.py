@@ -8,6 +8,9 @@ class Card:
         self.taunt = self.has_taunt()
         self.divine_shield = self.has_ds()
         self.windfury = self.has_windfury()
+        self.poisonous = self.has_poisonous()
+        self.reborn = self.has_reborn()
+        self.deathrattle = self.has_deathrattle()
         self.board_membership = None
 
     def adjust_health(self, health_delta):
@@ -23,12 +26,25 @@ class Card:
     def has_taunt(self):
         return "Taunt" in self.text
 
+    # This is maybe too simplistic in terms of texts like "Give your DS minions X" but for now it's ok
     def has_ds(self):
         return "Divine Shield" in self.text
 
     # Tier 1 minions have no windfury so this is for later
     def has_windfury(self):
         return "Windfury" in self.text
+
+    # Tier 1 minions have no poisonous so this is for later
+    def has_poisonous(self):
+        return "Poisonous" in self.text
+
+    # This is maybe too simplistic in terms of texts like "Give your Reborn minions X" but for now it's ok
+    def has_reborn(self):
+        return "Reborn" in self.text
+
+    # This is maybe too simplistic in terms of texts like "Give your Deathrattle minions X" but for now it's ok
+    def has_deathrattle(self):
+        return "Deathrattle" in self.text
 
     def assign_board_membership(self, board_id):
         self.board_membership = board_id
