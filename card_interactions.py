@@ -24,7 +24,7 @@ def attack(attacker, defender):
 
         return defender_health_delta, attacker_health_delta
 
-    # For now we disregard windfury as it doesn't appear in our card set
+    # For now we disregard Windfury and Poisonous as it doesn't appear in our card set
     defender_delta, attacker_delta = determine_health_delta_after_attack(
         attacker_ds, defender_ds
     )
