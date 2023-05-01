@@ -1,5 +1,4 @@
 import random
-from card_interactions import attack
 
 
 class CombatEvent:
@@ -20,11 +19,9 @@ class CombatEvent:
 
         self.attacker_windfury = attacker.windfury
 
-    def simulate_confrontation(self):
-        def determine_health_delta_after_attack():
+    def simulate_attack(self):
 
-            # TODO: Remember to update divine shield status after this resolves!
-
+        if self.attacker_attack > 0:
             if self.defender_ds:
                 defender_health_delta = 0
                 self.defender.update_divine_shield()
@@ -38,18 +35,18 @@ class CombatEvent:
 
             if self.attacker_ds:
                 attacker_health_delta = 0
-                self.attacker.update_divine_shield()
+                if self.defender_attack > 0:
+                    self.attacker.update_divine_shield()
             else:
                 if self.defender_poisonous:
                     attacker_health_delta = self.attacker_health
                 else:
                     attacker_health_delta = self.defender_attack
 
-            return defender_health_delta, attacker_health_delta
-
-        defender_delta, attacker_delta = determine_health_delta_after_attack()
-        self.attacker.adjust_health(-attacker_delta)
-        self.defender.adjust_health(-defender_delta)
+            self.attacker.adjust_health(-attacker_health_delta)
+            self.defender.adjust_health(-defender_health_delta)
+        else:
+            pass
 
 
 """
