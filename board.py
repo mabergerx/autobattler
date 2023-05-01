@@ -1,3 +1,6 @@
+import random
+
+
 class Board:
     def __init__(self, player, cards):
         self.player = player
@@ -16,6 +19,9 @@ class Board:
         # TODO: how? do we wanna keep internal card ids per board?
         pass
 
+    def get_random_card(self):
+        return random.choice(self.cards)
+
     def __str__(self):
         board_str = f"Player: {self.player}\n"
 
@@ -33,7 +39,9 @@ class Board:
         # Construct the board representation
         for card_repr in card_reprs:
             board_str += "|{0:-^{border_len}}|\n".format("", border_len=border_len)
-            board_str += "| {0:^{content_len}} |\n".format(card_repr, content_len=border_len - 2)
+            board_str += "| {0:^{content_len}} |\n".format(
+                card_repr, content_len=border_len - 2
+            )
             board_str += "|{0:-^{border_len}}|\n".format("", border_len=border_len)
 
         return board_str

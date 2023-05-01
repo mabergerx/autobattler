@@ -1,7 +1,7 @@
 def attack(attacker, defender):
-    attacker_attack_stat = attacker.attack
+    attacker_attack_stat = attacker.simulate_confrontation
 
-    defender_attack_stat = defender.attack
+    defender_attack_stat = defender.simulate_confrontation
 
     attacker_ds = attacker.divine_shield
     defender_ds = defender.divine_shield

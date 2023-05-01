@@ -13,14 +13,14 @@ class CombatEvent:
         self.defender_health = defender.health
 
         self.attacker_ds = attacker.divine_shield
-        self.defender_ds = attacker.divine_shield
+        self.defender_ds = defender.divine_shield
 
         self.attacker_poisonous = attacker.poisonous
         self.defender_poisonous = defender.poisonous
 
         self.attacker_windfury = attacker.windfury
 
-    def attack(self):
+    def simulate_confrontation(self):
         def determine_health_delta_after_attack():
 
             # TODO: Remember to update divine shield status after this resolves!
