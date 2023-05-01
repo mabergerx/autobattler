@@ -1,6 +1,7 @@
 import random
 from card_interactions import attack
 
+
 class CombatEvent:
     def __init__(self, attacker, defender):
         self.attacker = attacker
@@ -19,22 +20,25 @@ class CombatEvent:
 
         self.attacker_windfury = attacker.windfury
 
-    def attack(self, attacker, defender):
-
+    def attack(self):
         def determine_health_delta_after_attack():
 
             # TODO: Remember to update divine shield status after this resolves!
 
             if self.defender_ds:
                 defender_health_delta = 0
+                self.defender.update_divine_shield()
             else:
                 if self.attacker_poisonous:
-                    defender_health_delta = self.defender_health # Or maybe better -9999?
+                    defender_health_delta = (
+                        self.defender_health
+                    )  # Or maybe better -9999?
                 else:
                     defender_health_delta = self.attacker_attack
 
             if self.attacker_ds:
                 attacker_health_delta = 0
+                self.attacker.update_divine_shield()
             else:
                 if self.defender_poisonous:
                     attacker_health_delta = self.attacker_health
@@ -43,12 +47,9 @@ class CombatEvent:
 
             return defender_health_delta, attacker_health_delta
 
-        # For now we disregard Windfury and Poisonous as it doesn't appear in our card set
-        defender_delta, attacker_delta = determine_health_delta_after_attack(
-            attacker_ds, defender_ds
-        )
-        attacker.adjust_health(-attacker_delta)
-        defender.adjust_health(-defender_delta)
+        defender_delta, attacker_delta = determine_health_delta_after_attack()
+        self.attacker.adjust_health(-attacker_delta)
+        self.defender.adjust_health(-defender_delta)
 
 
 """
@@ -87,7 +88,7 @@ class CombatRound:
                 return board
 
     def add_to_combat_flow(self):
-
+        pass
 
     def determine_first_attacker(self):
         # For now, we disregard any forced first attacks, and determine this only based on minion count and RNG
@@ -126,4 +127,3 @@ class CombatRound:
             defender_card = random.choice(defender_board.cards)
 
         return defender_card
-

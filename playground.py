@@ -1,8 +1,7 @@
 from board import Board
 from api_interactions import get_card_by_name
 from card import parse_card_json_item
-from card_interactions import attack
-from combatround import CombatRound
+from combatround import CombatRound, CombatEvent
 
 # Let's try en example with attacking
 
@@ -39,8 +38,8 @@ print(board2)
 #     print(c)
 #     print("----")
 
-combat_round1 = CombatRound(board1, board2)
-print("determining first attacker...")
+# combat_round1 = CombatRound(board1, board2)
+# print("determining first attacker...")
 # print(combat_round1.first_attacker)
-print("Current attacker board:", combat_round1.current_attacker_board)
-print("Current defender card:", combat_round1.determine_attack_target().name)
+# print("Current attacker board:", combat_round1.current_attacker_board)
+# print("Current defender card:", combat_round1.determine_attack_target().name)
