@@ -1,7 +1,5 @@
 import random
 
-# SAP: 30051293
-
 
 class CombatEvent:
     def __init__(self, attacker, defender):
