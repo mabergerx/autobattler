@@ -50,6 +50,12 @@ class CombatEvent:
         else:
             pass
 
+    def __str__(self):
+        return (
+            f"Attacker: {self.attacker})\n"
+            f"Defender: {self.defender}"
+        )
+
 
 """
 What can happen during one confrontation between opposing minions:
@@ -73,7 +79,7 @@ class CombatRound:
         self.current_attacker_board = None
         self.current_defender_board = None
         self.first_attacker = self.determine_first_attacker()
-        self.combatevent_flow = []
+        self.combat_flow = []
 
     def set_current_attacker_board(self, board_id):
         self.current_attacker_board = board_id
@@ -86,8 +92,8 @@ class CombatRound:
             if board.player == board_id:
                 return board
 
-    def add_to_combat_flow(self):
-        pass
+    def add_to_combat_flow(self, event):
+        self.combat_flow.append(event)
 
     def determine_first_attacker(self):
         # For now, we disregard any forced first attacks, and determine this only based on minion count and RNG
@@ -126,3 +132,35 @@ class CombatRound:
             defender_card = random.choice(defender_board.cards)
 
         return defender_card
+
+    def simulate(self):
+        # Determine the first attacker
+        current_attacker_card = self.determine_first_attacker()
+
+        # Continue the combat simulation until one of the boards has no cards left
+        while len(self.board1.cards) > 0 and len(self.board2.cards) > 0:
+            # Determine the attack target
+            current_defender_card = self.determine_attack_target()
+
+            # Create a CombatEvent and simulate the attack
+            combat_event = CombatEvent(current_attacker_card, current_defender_card)
+            self.add_to_combat_flow(combat_event)
+            combat_event.simulate_attack()
+
+            # Remove defeated cards from the boards
+            self.board1.cards = [card for card in self.board1.cards if card.health > 0]
+            self.board2.cards = [card for card in self.board2.cards if card.health > 0]
+
+            # Determine the next attacker card
+            current_attacker_board = self.get_board_by_id(self.current_attacker_board)
+            next_attacker_index = (current_attacker_board.cards.index(current_attacker_card) + 1) % len(
+                current_attacker_board.cards)
+            current_attacker_card = current_attacker_board.cards[next_attacker_index]
+
+            # Switch attacker and defender boards
+            self.current_attacker_board, self.current_defender_board = self.current_defender_board, self.current_attacker_board
+
+    def __str__(self):
+        return self.combat_flow
+
+
