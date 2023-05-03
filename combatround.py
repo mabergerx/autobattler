@@ -51,10 +51,7 @@ class CombatEvent:
             pass
 
     def __str__(self):
-        return (
-            f"Attacker: {self.attacker}\n"
-            f"Defender: {self.defender}"
-        )
+        return f"Attacker: {self.attacker}\n" f"Defender: {self.defender}"
 
 
 """
@@ -108,15 +105,15 @@ class CombatRound:
                 self.set_current_defender_board(self.board2.player)
             else:
                 self.set_current_defender_board(self.board1.player)
-            return attacking_board.cards[0]
+            return attacking_board
         elif len(board1_cards) > len(board2_cards):
             self.set_current_attacker_board(self.board1.player)
             self.set_current_defender_board(self.board2.player)
-            return board1_cards[0]
+            return self.board1
         else:
             self.set_current_attacker_board(self.board2.player)
             self.set_current_defender_board(self.board1.player)
-            return board2_cards[0]
+            return self.board2
 
     def determine_attack_target(self):
         # For now, this is by default a random target, unless there is a Taunt card. If there are multiple Taunt cards,
@@ -134,40 +131,55 @@ class CombatRound:
         return defender_card
 
     def simulate(self):
+
         # Determine the first attacker
-        current_attacker_card = self.determine_first_attacker()
+        current_attacker_board = self.determine_first_attacker()
+        print(f"First attacker board: {current_attacker_board.player}")
+
+        # Initialize the next attacker index for both boards
+        next_attacker_index_board1 = 1
+        next_attacker_index_board2 = 1
+
+        # Get the first attacker card using the indices
+        if self.current_attacker_board == self.board1.player:
+            current_attacker_card = self.board1.cards[next_attacker_index_board1 - 1]
+        else:
+            current_attacker_card = self.board2.cards[next_attacker_index_board2 - 1]
 
         # Continue the combat simulation until one of the boards has no cards left
         while len(self.board1.cards) > 0 and len(self.board2.cards) > 0:
+            print(f"Current attacker card: {current_attacker_card}")
             # Determine the attack target
             current_defender_card = self.determine_attack_target()
+            print(f"Current defender card: {current_defender_card}")
 
             # Create a CombatEvent and simulate the attack
             combat_event = CombatEvent(current_attacker_card, current_defender_card)
-            self.add_to_combat_flow(combat_event)
             combat_event.simulate_attack()
-            print(f"Combat event happened:")
-            print(combat_event)
 
-            # print(f"Boards before combat:\n Board1: {self.board1.cards}\n Board2: {self.board2.cards}")
             # Remove defeated cards from the boards
             self.board1.cards = [card for card in self.board1.cards if card.health > 0]
             self.board2.cards = [card for card in self.board2.cards if card.health > 0]
-            # print([card for card in self.board1.cards if card.health > 0])
-            # print([card for card in self.board2.cards if card.health > 0])
-            # print(f"Boards after combat:\n Board1: {self.board1.cards}\n Board2: {self.board2.cards}")
-
-
-            # Determine the next attacker card
-            current_attacker_board = self.get_board_by_id(self.current_attacker_board)
-            next_attacker_index = (current_attacker_board.cards.index(current_attacker_card) + 1) % len(
-                current_attacker_board.cards)
-            current_attacker_card = current_attacker_board.cards[next_attacker_index]
 
             # Switch attacker and defender boards
-            self.current_attacker_board, self.current_defender_board = self.current_defender_board, self.current_attacker_board
+            self.current_attacker_board, self.current_defender_board = (
+                self.current_defender_board,
+                self.current_attacker_board,
+            )
+
+            # Update the current attacker board and determine the next attacker card
+            self.current_attacker_board = self.get_board_by_id(self.current_attacker_board)
+
+            if self.current_attacker_board == self.board1.player:
+                current_attacker_card = self.board1.cards[next_attacker_index_board1]
+                next_attacker_index_board1 = (next_attacker_index_board1 + 1) % len(
+                    self.board1.cards
+                )
+            else:
+                current_attacker_card = self.board2.cards[next_attacker_index_board2]
+                next_attacker_index_board2 = (next_attacker_index_board2 + 1) % len(
+                    self.board2.cards
+                )
 
     def __str__(self):
         return " -> ".join(self.combat_flow)
-
-
