@@ -1,5 +1,7 @@
 import random
 
+# SAP: 30051293
+
 
 class CombatEvent:
     def __init__(self, attacker, defender):
@@ -17,7 +19,7 @@ class CombatEvent:
         self.attacker_poisonous = attacker.poisonous
         self.defender_poisonous = defender.poisonous
 
-        self.attacker_windfury = attacker.windfury
+        # self.attacker_windfury = attacker.windfury    # Is probably not handled here, but one level above
 
     def simulate_attack(self):
 
