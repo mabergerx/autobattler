@@ -59,3 +59,5 @@ print(board2)
 
 print("Testing a single combat round")
 combat_round = CombatRound(board1, board2)
+combat_round.simulate()
+print(combat_round)

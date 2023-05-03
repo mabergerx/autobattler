@@ -52,7 +52,7 @@ class CombatEvent:
 
     def __str__(self):
         return (
-            f"Attacker: {self.attacker})\n"
+            f"Attacker: {self.attacker}\n"
             f"Defender: {self.defender}"
         )
 
@@ -146,10 +146,17 @@ class CombatRound:
             combat_event = CombatEvent(current_attacker_card, current_defender_card)
             self.add_to_combat_flow(combat_event)
             combat_event.simulate_attack()
+            print(f"Combat event happened:")
+            print(combat_event)
 
+            # print(f"Boards before combat:\n Board1: {self.board1.cards}\n Board2: {self.board2.cards}")
             # Remove defeated cards from the boards
             self.board1.cards = [card for card in self.board1.cards if card.health > 0]
             self.board2.cards = [card for card in self.board2.cards if card.health > 0]
+            # print([card for card in self.board1.cards if card.health > 0])
+            # print([card for card in self.board2.cards if card.health > 0])
+            # print(f"Boards after combat:\n Board1: {self.board1.cards}\n Board2: {self.board2.cards}")
+
 
             # Determine the next attacker card
             current_attacker_board = self.get_board_by_id(self.current_attacker_board)
@@ -161,6 +168,6 @@ class CombatRound:
             self.current_attacker_board, self.current_defender_board = self.current_defender_board, self.current_attacker_board
 
     def __str__(self):
-        return self.combat_flow
+        return " -> ".join(self.combat_flow)
 
 

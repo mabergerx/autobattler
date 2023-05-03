@@ -55,8 +55,8 @@ class Card:
 
     def __str__(self):
         return (
-            f"Card: {self.name}\nAttack: {self.attack}\nHealth: {self.health}\nDivine Shield: {self.divine_shield}"
-            f"\nTaunt: {self.taunt}\nBoard: {self.board_membership}"
+            f"\n----Card----\n{self.name}\nAttack: {self.attack}\nHealth: {self.health}\nDivine Shield: {self.divine_shield}"
+            f"\nTaunt: {self.taunt}\nBoard: {self.board_membership}\n------------\n"
         )
 
 
